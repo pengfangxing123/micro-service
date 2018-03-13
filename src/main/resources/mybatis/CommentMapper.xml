@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.genius.znzx.dao.CommentMapper"> 
+	<resultMap type="com.genius.znzx.entity.Comment" id="comment">
+	    <id property="id" column="id" />
+  		<result property="content" column="content"/>
+  		<result property="is_sub" column="sub"/>
+  		<result property="userId" column="userId"/>  
+  		<result property="parent_id" column="parent_id"/>  
+  		<result property="isshow" column="isshow"/>
+  		<result property="createTime" column="createTime"/>     
+	</resultMap>
+	
+	<select id="getCommentListById" parameterType="Map" resultMap="comment">
+	   select * from comment where id=#{id} and isshow='1'
+	</select>
+	
+	<select id="getAllTheSub" parameterType="Map" resultMap="comment">
+	   select *from comment where parent_id=#{parent_id}
+	</select>
+</mapper>

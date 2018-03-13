@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.genius.znzx.dao.TrTestMapper"> 
+	<!--插入数据 -->
+	<insert id="insertDatas" parameterType="List">
+			insert into data_zx (
+			      id,			
+			      name,			   
+			      age
+			)VALUES
+			<foreach collection="list" item="item" index="index" separator=",">
+			    (
+			  	  #{item.id},
+			      #{item.name},
+			      #{item.age}	  
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="List">
+	    delete from data_zx
+	    	where id in
+	    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}
+ 		</foreach>  
+	</delete>
+</mapper>

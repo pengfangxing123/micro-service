@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org"
+
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+   <head>
+
+       <title>先用最简单的表单提交</title>
+
+   </head>
+
+   <body th:inline="text">
+
+      <form method="POST" enctype="multipart/form-data"action="/hello/upload.do"> 
+
+              <p>文件：<input type="file" name="file"/></p>
+
+          <p><input type="submit" value="上传" /></p>
+
+      </form>
+		<p>[[${tip}]]</p>
+		
+	<ul id="ul">
+		
+	</ul>
+   </body>
+   <script type="text/javascript" src="/js/jquery2.2.4.min.js"></script>
+   <script th:inline="javascript">
+   		var commentList=[[${commentList}]];
+   		var text="";
+   		for(var i=0;i<commentList.length;i++){
+   			var content=commentList[i].content;
+   			var userid=commentList[i].userId;
+   			var replyList=commentList[i].replyList;
+   			text+="<li>"+content+userid;
+   			if(replyList!=null&&replyList.length>0){
+   				var add=addList(replyList,text);//再将此节点的用户信息作为参数传入，达到a回复b的开头的效果
+   				text=add;
+   			}
+   			text+="</li>";
+   		}
+   
+   		function addList(replyList,text){
+   			for(var i=0;i<replyList.length;i++){
+   	   			var content=replyList[i].content;
+   	   			var userid=replyList[i].userId;
+   	   			var replyList1=replyList[i].replyList;
+   	   			text+="<li>"+content+userid;
+   	   			if(replyList1!=null&&replyList1.length>0){
+   	   				var add=addList(replyList1,text);
+   	   				text=add;
+   	   			}
+   	   			text+="</li>";
+   	   		}
+   			return text;
+   		}
+   		
+   		$(function(){
+   			$("#ul").html(text)
+   		})
+   </script>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org"
+
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+   <head>
+		<script type="text/javascript" src="http://js.jrjimg.cn/lib/jquery-1.7.min.js?v=1000"></script>
+       <title>先用最简单的表单提交</title>
+
+   </head>
+
+   <body th:inline="text">
+
+      <form method="POST" enctype="multipart/form-data"action="/hello/upload.do"> 
+
+              <p>文件：<input type="file" name="file"/></p>
+
+          <p><input type="submit" value="上传" /></p>
+
+      </form>
+		<p>[[${tip}]]</p>
+   </body>
+   
+   <script >
+		$(function(){
+			var url ="http://172.18.5.71:9992/api/activity/activityListDetails.shtml?id=b28b4b7def8d4b7d80c7ff9334b0f765";
+			$.ajax({
+				url: url,
+				type: 'GET',
+				cache: false,
+				dataType : "json",
+				success: function (result) {
+					if(result){
+						if(result.errCode==0) {
+							alert("上传成功");
+						}else {
+							alert(result.data);
+						}
+					}
+				},
+				error: function () {
+					alert('服务繁忙，请稍后再试11!');
+				}
+			});
+		})	
+	</script>
+
+</html>

@@ -1,0 +1,91 @@
+spring: 
+  datasource: 
+    url: jdbc:mysql://localhost:3306/myproject?useUnicode=true&amp;characterEncoding=utf-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    max-idle: 60
+    max-wait: 10000
+    min-idle: 5
+    initial-size: 5
+    validation-query: SELECT 1
+    test-on-borrow: false
+    test-while-idle: true
+    useSSL: true
+    time-between-eviction-runs-millis: 18800
+    #jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+  #mvc:
+   #view:
+    #prefix: /WEB-INF/jsp/
+    #suffix: .jsp 
+  thymeleaf: 
+    cache: false
+    model: HTML5
+    encoding: UTF-8
+    suffix: .html
+    content-type: text/html
+     
+#  data:  
+#   mongodb:  
+#    uri: mongodb://Mongodb-M1:37017,Mongodb-S1:37017,Mongodb-A1:37017/flow
+#    uri: mongodb://172.18.135.18:27017,172.18.135.18:27018/admin
+#    connectTimeout: 5000
+#    socketTimeout: 180000
+#    perHost: 200
+#    waitTime: 20000
+#    connectionMultiplier: 5
+       
+#mongodb配置
+mongodb:
+  hosts:
+   - Mongodb-M1
+   - Mongodb-S1
+   - Mongodb-A1
+  dbname: flow
+  port: 37017
+  connectTimeout: 5000
+  socketTimeout: 180000
+  perHost: 200
+  waitTime: 20000
+  connectionMultiplier: 5
+   
+#redis配置
+redis:
+  hostName: 172.18.135.18
+  port: 6379
+  password: 123.com
+  dataBase: 0
+  maxTotal: 50
+  maxIdle: 20
+  maxWaitMillis: 30000
+  testOnBorrow: true
+  testOnReturn: true
+  timeout: 30000
+  
+#test:
+#  hostName: 172.18.131.7
+#  port: 6379
+#  password: gfp-ni-zen-me-hai-bu-die?
+#  dataBase: 0
+#  maxTotal: 50
+#  maxIdle: 20
+#  maxWaitMillis: 30000
+#  testOnBorrow: true
+#  testOnReturn: true
+#  timeout: 30000	
+
+upload:
+  maxFileSize: 512KB
+  maxRequestSize: 512KB
+  location: E:/upload/
+
+#mybatis的配置
+mybatis: 
+  configuration: 
+   mapUnderscoreToCamelCase: true
+  mapperLocations: classpath:/mybatis/*.xml
+
+#server
+server: 
+  port: 8089
+  
