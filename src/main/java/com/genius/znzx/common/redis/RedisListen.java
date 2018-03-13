@@ -1,25 +1,15 @@
 package com.genius.znzx.common.redis;
 
-import java.io.UnsupportedEncodingException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
-
-import redis.clients.jedis.JedisPoolConfig;
-
-import com.mongodb.MongoClient;
 
 /**
  * 
@@ -33,7 +23,7 @@ public class RedisListen implements Runnable{
 	private static Subscribe subscribe;
 	
 	@Resource(name="redisTemplate")
-	private RedisTemplate myRedisTemlet;
+	private RedisTemplate<String, Object> myRedisTemlet;
 	
 	private Thread thread;
 	
@@ -47,7 +37,6 @@ public class RedisListen implements Runnable{
 		thread.start();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		logger.info("开始监听");		

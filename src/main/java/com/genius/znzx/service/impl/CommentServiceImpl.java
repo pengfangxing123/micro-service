@@ -1,4 +1,4 @@
-package com.genius.znzx.service.imp;
+package com.genius.znzx.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.genius.znzx.entity.Comment;
 import com.genius.znzx.service.CommentService;
 
 @Service
-public class CommentServiceImp implements CommentService {
+public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private CommentMapper commentMapper;
 	

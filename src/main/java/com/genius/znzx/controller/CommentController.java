@@ -1,9 +1,9 @@
 package com.genius.znzx.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +23,9 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
+	@Value("${test.pfx}")  
+	private String pfx;
+	
 	@RequestMapping("/get.shtml")
 	public ModelAndView getCommentById(){
 		ModelAndView model = new ModelAndView("comment");
@@ -36,5 +39,13 @@ public class CommentController {
 	public List<Comment> getCommentJsonById(){
 		List<Comment> commentList=this.commentService.getCommentListById();	
 		return commentList;
+	}
+	
+
+	@RequestMapping("/testRedis.shtml")
+	@ResponseBody
+	public String testRedis(){
+		System.out.println(pfx);
+		return "123";
 	}
 }

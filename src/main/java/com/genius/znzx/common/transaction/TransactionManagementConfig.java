@@ -1,4 +1,4 @@
-package com.genius.znzx.transaction;
+package com.genius.znzx.common.transaction;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +7,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * 事物控制
+ * @author fangxing.peng
+ *
+ */
 @EnableTransactionManagement
 @Configuration
 public class TransactionManagementConfig  {

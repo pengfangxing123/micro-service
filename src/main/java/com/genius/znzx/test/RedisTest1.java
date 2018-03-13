@@ -12,12 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisTest1 {
-	@Resource(name="redisTemplate_test")
+	@Resource(name="redisTemplate")
 	private RedisTemplate<String, Object> myRedisTemlet;
+
 	
 	@Test
 	public void test1(){
-		myRedisTemlet.opsForValue().set("test1", "pengfangxing");
+		
+		myRedisTemlet.opsForValue().set("12345", "pengfangxing");
 		Object object = myRedisTemlet.opsForValue().get("12345");
 		System.out.println(object.toString());
 		

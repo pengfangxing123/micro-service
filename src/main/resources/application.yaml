@@ -1,4 +1,8 @@
 spring: 
+  #默认环境
+  profiles:
+    active: dev
+    
   datasource: 
     url: jdbc:mysql://localhost:3306/myproject?useUnicode=true&amp;characterEncoding=utf-8
     username: root
@@ -84,8 +88,27 @@ mybatis:
   configuration: 
    mapUnderscoreToCamelCase: true
   mapperLocations: classpath:/mybatis/*.xml
+  
+#@vale取配置文件中的值  
+test:
+  pfx: pengfangxing
 
-#server
+#多环境配置
+---
+spring:
+  profiles: dev
 server: 
   port: 8089
+  
+---
+spring:
+  profiles: test
+server: 
+  port: 8088
+  
+---
+spring:
+  profiles: pro
+server: 
+  port: 8087
   
