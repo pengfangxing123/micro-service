@@ -7,5 +7,8 @@ import com.genius.znzx.entity.Comment;
 
 
 public interface CommentService {
-	List<Comment> getCommentListById();
+	public List<Comment> getCommentListById();
+
+	public List<Comment> switchDataSource();
+
 }

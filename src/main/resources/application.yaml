@@ -3,32 +3,52 @@ spring:
   profiles:
     active: dev
     
-  datasource: 
-    url: jdbc:mysql://localhost:3306/myproject?useUnicode=true&amp;characterEncoding=utf-8
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
-    max-idle: 60
-    max-wait: 10000
-    min-idle: 5
-    initial-size: 5
-    validation-query: SELECT 1
-    test-on-borrow: false
-    test-while-idle: true
-    useSSL: true
-    time-between-eviction-runs-millis: 18800
-    #jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+  datasource:
+    test1:
+      url: jdbc:mysql://localhost:3306/mytest?useUnicode=true&amp;characterEncoding=utf-8
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      max-idle: 60
+      max-wait: 10000
+      min-idle: 5
+      initial-size: 5
+      validation-query: SELECT 1
+      test-on-borrow: false
+      test-while-idle: true
+      useSSL: true
+      time-between-eviction-runs-millis: 18800
+      #jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+      
+    test2:   
+      url: jdbc:mysql://localhost:3306/myproject?useUnicode=true&amp;characterEncoding=utf-8
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      max-idle: 60
+      max-wait: 10000
+      min-idle: 5
+      initial-size: 5
+      validation-query: SELECT 1
+      test-on-borrow: false
+      test-while-idle: true
+      useSSL: true
+      time-between-eviction-runs-millis: 18800
+      #jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+    
   #mvc:
    #view:
     #prefix: /WEB-INF/jsp/
     #suffix: .jsp 
+    
   thymeleaf: 
     cache: false
     model: HTML5
     encoding: UTF-8
     suffix: .html
     content-type: text/html
-     
+#   prefix: classpath:/templates/
+   
 #  data:  
 #   mongodb:  
 #    uri: mongodb://Mongodb-M1:37017,Mongodb-S1:37017,Mongodb-A1:37017/flow
@@ -38,7 +58,11 @@ spring:
 #    perHost: 200
 #    waitTime: 20000
 #    connectionMultiplier: 5
-       
+  
+  #session管理配置
+  session:
+    store-type: redis	
+      
 #mongodb配置
 mongodb:
   hosts:
@@ -88,27 +112,50 @@ mybatis:
   configuration: 
    mapUnderscoreToCamelCase: true
   mapperLocations: classpath:/mybatis/*.xml
+
+#通用Mapper 用在mapperScannerConfigurer中， mapperScannerConfigurer是在解析加载bean定义执行阶段，来不及获取配置文件中值，目前写死在配置中
+#mapper:
+#  supportMethodsArguments: com.karle.tk.TkMapper
+#  not-empty: false
+#  identity: MYSQL
+  
+#分页插件	  
+pagehelper:
+  #指定分页插件使用哪种方言,没配置时自动检测
+  helperDialect: mysql
+  #分页合理化参数，默认为false,为true 时,pageNum<=0 时会查询第一页,pageNum>pages(超过总数时),会查询最后一页
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  #不加这一行也能出来分页效果，但是统计重来的total是本页总数。不是查询总记录数
+  dialect: com.github.pagehelper.dialect.helper.MySqlDialect
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
   
 #@vale取配置文件中的值  
 test:
   pfx: pengfangxing
 
-#多环境配置
+#多环境配置(在单一文件中，可用连续三个连字号（---）区分多个文件)
 ---
 spring:
   profiles: dev
 server: 
   port: 8089
+  #加上context-path后静态资源不会加上contexPath 可以用1,th:src="@{/js/jquery2.2.4.min.js}"类型方法解决
+  context-path: /znzx
   
 ---
 spring:
   profiles: test
 server: 
   port: 8088
+  context-path: /znzx
   
 ---
 spring:
   profiles: pro
 server: 
   port: 8087
+  context-path: /znzx
   

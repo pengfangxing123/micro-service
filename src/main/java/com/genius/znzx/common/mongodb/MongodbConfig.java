@@ -151,3 +151,22 @@ public class MongodbConfig {
 			
 	}
 }
+
+//@Configuration
+//public class MockConfiguration{
+//    @Bean
+//    public MockService mockService(){
+//        return new MockServiceImpl(dependencyService());
+//    }
+//    
+//    @Bean
+//    public DependencyService dependencyService(){
+//        return new DependencyServiceImpl();
+//    }
+//}
+//@Configuration为JavaConfig配置类上面配置等于下面再xml的配置
+//<bean id="mockService" class="..MockServiceImpl">
+//<propery name ="dependencyService" ref="dependencyService" />
+//</bean>
+//
+//<bean id="dependencyService" class="DependencyServiceImpl"></bean>

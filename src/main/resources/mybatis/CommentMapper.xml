@@ -18,4 +18,8 @@
 	<select id="getAllTheSub" parameterType="Map" resultMap="comment">
 	   select *from comment where parent_id=#{parent_id}
 	</select>
+	
+	<select id="insertDataSource2" parameterType="java.lang.String" >
+	   INSERT INTO COMMENT (id,parent_id) VALUES (#{uuid}, 3)
+	</select>
 </mapper>

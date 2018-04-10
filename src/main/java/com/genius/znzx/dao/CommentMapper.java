@@ -10,5 +10,7 @@ public interface CommentMapper {
 	List<Comment> getCommentListById(Map map);
 	
 	List<Comment> getAllTheSub(Map map);
+
+	void insertDataSource2(String uuid);
 	
 }

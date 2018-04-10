@@ -44,8 +44,9 @@ public class CommentController {
 
 	@RequestMapping("/testRedis.shtml")
 	@ResponseBody
-	public String testRedis(){
-		System.out.println(pfx);
-		return "123";
+	public List<Comment> testRedis(){
+		return this.commentService.switchDataSource();
 	}
+	
+	
 }
