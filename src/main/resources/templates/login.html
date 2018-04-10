@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org"
+
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form id="form">
+    <p>账号：<input type="text" name="username" value="admin"/></p>
+    <p>密码：<input type="text" name="password" value="123456"/></p>
+    <p><input type="button" id ="button" value="登录"/></p>
+</form>
+</body>
+
+   <script type="text/javascript" th:src="@{/js/jquery2.2.4.min.js}"></script>
+   <script th:inline="javascript">
+   		var projectName="/znzx"
+   		$(function(){
+   			$("#button").click(function(){
+   				$.ajax({
+   					url: projectName+"/login",
+   					type: 'POST',
+   					data: $('#form').serialize(),
+   					async: false,
+   					cache: false,
+   					dataType : "json",
+   					success: function (result) {
+   						if(result.errCode!=0){
+   							alert(result.msg);
+   							return;
+   						}
+   						window.location.href="index";
+   					}
+   				});
+   			});
+   		})
+   </script>
+</html>

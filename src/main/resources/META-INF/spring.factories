@@ -1,0 +1,4 @@
+# Auto Configure这两个类会被spring boot初始化扫描到，这样弄也无效
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.genius.znzx.common.mybatis.MybatisConfig,\
+com.genius.znzx.common.mybatis.MybatisScanConfiguration
