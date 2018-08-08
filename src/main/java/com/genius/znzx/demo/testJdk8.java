@@ -22,7 +22,7 @@ public class testJdk8 {
 		    }
 		};
 		
-		//1111111
+		//1111111222222
 		//numbers=numbers.stream().filter(p -> p!=3).collect(Collectors.toList());
 		
 		//numbers=numbers.stream().distinct().collect(Collectors.toList());
