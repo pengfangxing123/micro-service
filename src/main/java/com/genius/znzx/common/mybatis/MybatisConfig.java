@@ -4,6 +4,7 @@ package com.genius.znzx.common.mybatis;
 import java.util.Properties;
 
 import org.apache.ibatis.io.VFS;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.genius.znzx.common.DynamicDataSource;
 import com.genius.znzx.common.transaction.MultiDataSourceTransactionFactory;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInterceptor;
 
 @Configuration
 public class MybatisConfig {
@@ -26,8 +28,8 @@ public class MybatisConfig {
 	private static Logger log = Logger.getLogger(MybatisConfig.class);
 
 	@Bean(name = "sqlSessionFactory")
-	public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource")DynamicDataSource datasource, MybatisConfigurationProperties properties)
-			throws Exception {
+	public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource")DynamicDataSource datasource, MybatisConfigurationProperties properties
+			,Interceptor pageHelper)throws Exception {
 
 		log.info("*************************sqlSessionFactory:begin***********************" + properties);
 
@@ -40,6 +42,11 @@ public class MybatisConfig {
 //		log.info("!!!!!!!!!!!url:"+datasource.getUrl());
 //		log.info("!!!!!!!!!username"+datasource.getUsername());
 //		log.info("!!!!!!!!password:"+datasource.getPassword());
+		
+		//重写了sessionFactory，所以得手动引入pageHelper插件，否则分页无效
+		//因为pageHelper 5.x没有实现Interceptor，所以是 new PageInterceptor();
+	    Interceptor[] plugins =  new Interceptor[]{pageHelper};  
+	    sessionFactory.setPlugins(plugins);  
 		
 		sessionFactory.setTypeAliasesPackage(properties.typeAliasesPackage);
 		//sessionFactory.setTypeHandlersPackage(properties.typeHandlerPackage);
@@ -72,13 +79,15 @@ public class MybatisConfig {
 	
     /**
      * 分页插件
+     * 因为pageHelper 5.x没有实现Interceptor，所以是 new PageInterceptor();
+     * pageHelper 4.x 是 new PageHelper()它实现了 Interceptor；可以在 sessionFactory.setPlugins(plugins)直接set 
      * @param properties
      * @return
      */
     @Bean
-    public PageHelper pageHelper(PageHelperProperties properties) {
+    public Interceptor pageHelper(PageHelperProperties properties) {
         log.info("注册MyBatis分页插件PageHelper");
-        PageHelper pageHelper = new PageHelper();
+        Interceptor interceptor = new PageInterceptor();
         Properties p = new Properties();
         p.setProperty("offsetAsPageNum", properties.offsetAsPageNum);
         p.setProperty("rowBoundsWithCount", properties.rowBoundsWithCount);
@@ -86,8 +95,8 @@ public class MybatisConfig {
         p.setProperty("helperDialect", properties.helperDialect);
         p.setProperty("supportMethodsArguments", properties.supportMethodsArguments);
         p.setProperty("params", properties.params);
-        pageHelper.setProperties(p);
-        return pageHelper;
+        interceptor.setProperties(p);
+        return interceptor;
     }    
     
     /**
