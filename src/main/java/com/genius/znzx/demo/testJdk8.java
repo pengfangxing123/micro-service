@@ -21,7 +21,8 @@ public class testJdk8 {
 				put("OYR_GR", "近1年");
 		    }
 		};
-				
+		
+		//1111111
 		//numbers=numbers.stream().filter(p -> p!=3).collect(Collectors.toList());
 		
 		//numbers=numbers.stream().distinct().collect(Collectors.toList());
